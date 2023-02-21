@@ -6,16 +6,11 @@ workbook = openpyxl.load_workbook('input_data.xlsx')
 # Select the first sheet
 sheet = workbook.active
 
-# Prompt the user to enter the name and age values
-name = input("Enter name: ")
-age = input("Enter age: ")
+# Prompt the user to enter the cell coordinates
+cell_coordinates = input("Enter the cell coordinates (e.g. A1): ")
 
-# Read the name and age values from the first row of the sheet
-expected_name = sheet.cell(row=1, column=1).value
-expected_age = sheet.cell(row=1, column=2).value
+# Read the value from the corresponding cell
+value = sheet[cell_coordinates].value
 
-# Check if the user's input matches the expected values
-if name == expected_name and age == expected_age:
-    print("Input is correct.")
-else:
-    print("Input is incorrect.")
+# Print the input value
+print(f"{cell_coordinates}: {value}")
