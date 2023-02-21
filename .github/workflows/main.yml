@@ -1,8 +1,7 @@
 name: Process Data
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
@@ -20,8 +19,8 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install pandas openpyxl
+        pip install openpyxl
 
     - name: Run Script
       run: |
-        docker run --rm -v $(pwd):/app -w /app python:3.8 python main.py
+        python main.py
