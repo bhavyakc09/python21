@@ -1,11 +1,12 @@
-import pandas as pd
+import openpyxl
 
-# read data from Excel file
-data = pd.read_excel('input_data.xlsx')
+# Load the workbook
+workbook = openpyxl.load_workbook('input_data.xlsx')
 
-# process data (replace with your own processing logic)
-processed_data = data * 2
+# Select the first sheet
+sheet = workbook.active
 
-# save output to a text file
-with open('output_data.txt', 'w') as f:
-    f.write(str(processed_data))
+# Iterate over the rows and columns to read data
+for row in sheet.iter_rows(values_only=True):
+    for cell in row:
+        print(cell)
