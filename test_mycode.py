@@ -1,28 +1,7 @@
-import os
-import sys
-import openpyxl
-import pytest
+with open('output_data.txt', 'r') as f:
+    output_data = f.read()
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-    
-def myfunc(tmp_path, monkeypatch):
-    input_file = tmp_path / "input_data.xlsx"
-    # create a test Excel file
-    wb = openpyxl.Workbook()
-    sheet = wb.active
-    sheet["A1"] = 1
-    sheet["A2"] = 2
-    sheet["A3"] = 3
-    wb.save(input_file)
+# replace with your expected output data
+expected_output_data = '[[2, 4], [6, 8]]'
 
-    # set up input for the function
-    input_str = "A2\n"  # simulate user entering "A2" at the prompt
-    monkeypatch.setattr('builtins.input', lambda x: input_str)
-
-    # test myfunc with the test input file
-    expected_result = 4
-    result = myfunc(input_file)
-    assert result == expected_result
-    
-   
-
+assert output_data == expected_output_data, 'Output data does not match expected data!'
