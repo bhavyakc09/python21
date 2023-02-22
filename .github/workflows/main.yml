@@ -6,15 +6,15 @@ on:
       - main
 
 jobs:
-  run-script:
+  run_script:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          pip install openpyxl
-      - name: Run script
-        run: |
-          echo $(cat input_data.xlsx | base64 -w 0) | base64 -d > input_data_decoded.xlsx
-          echo $(python main.py < input_data_decoded.xlsx)
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Prompt user for input value
+      run: echo ::set-output name=input_value::$(read -p "Enter the input value: " val && echo $$val)
+
+    - name: Run script
+      run: python main.py ${{ steps.prompt.outputs.input_value }}
