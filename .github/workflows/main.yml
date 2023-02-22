@@ -6,21 +6,15 @@ on:
       - main
 
 jobs:
-  process_data:
+  run-script:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
-    - name: Install Dependencies
-      run: |
-        pip install openpyxl
-
-    - name: Run Script
-      run: |
-        echo "A1" | python main.py
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          pip install openpyxl
+      - name: Run script
+        run: |
+          echo $(cat input_data.xlsx | base64 -w 0) | base64 -d > input_data_decoded.xlsx
+          echo $(python main.py < input_data_decoded.xlsx)
