@@ -6,16 +6,11 @@ on:
       - main
 
 jobs:
-  read-input:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install openpyxl
-        run: pip install openpyxl
-      - name: Run main.py
-        run: python main.py
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: pip install openpyxl
+    - name: Run script
+      run: python main.py A1
