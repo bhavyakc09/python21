@@ -1,16 +1,21 @@
-import openpyxl
+name: Read input from Excel
 
-# Load the workbook
-workbook = openpyxl.load_workbook('input_data.xlsx')
+on:
+  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
 
-# Select the first sheet
-sheet = workbook.active
-
-# Prompt the user to enter the cell coordinates
-cell_coordinates = input("Enter the cell coordinates (e.g. A1): ")
-
-# Read the value from the corresponding cell
-value = sheet[cell_coordinates].value
-
-# Print the input value
-print(f"{cell_coordinates}: {value}")
+jobs:
+  read-input:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install openpyxl
+        run: pip install openpyxl
+      - name: Run main.py
+        run: python main.py
